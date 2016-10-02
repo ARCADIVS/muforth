@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="copyright" content="All content on muforth.nimblemachines.com is copyrighted. All rights are reserved." />
+<meta name="robots" content="index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/-/screen.css" type="text/css" />
+<link rel="canonical" href="http://muforth.nimblemachines.com/stm32-gpio/" />
+<title>STM32 GPIO &ndash; muFORTH</title>
+</head>
+<body>
+
+<div id="header">
+<h1>STM32 GPIO</h1>
+<hr />
+</div>
+
+<div id="content">
+<p>The STM32 GPIO (general purpose i/o) pins are very flexible, and, like every silicon vendor&rsquo;s, rather idiosyncratic. After perusing the <a href="http://www.st.com/st-web-ui/static/active/en/resource/technical/document/reference_manual/DM00031020.pdf">STM32F4 reference manual</a> I decided to do a quick write-up of my understanding of how to use the pins.</p>
+<p>These are probably the same across <em>all</em> the STM32 parts, but at the moment I have not verified this.</p>
+<p>A few quick points:</p>
+<ul>
+<li>Each port is 16 bits wide</li>
+<li>Any pin of any port can be connected to <em>any</em> of 16 alternate functions (AFs)</li>
+<li>Any combination of bits in the output data register can be <em>set</em> or <em>reset</em> with a single, word-wide store (of two 16-bit masks) to a set/reset register</li>
+<li>Every pin can be configured as input, output, alternate function (AF), or analog;</li>
+<li>.. can be push-pull (ie, totem-pole) or open-drain;</li>
+<li>.. can have a weak pull-up, weak pull-down, or none;</li>
+<li>.. and can have a configured slew rate (ie, toggle speed)</li>
+</ul>
+<p>With that in mind, here is the register layout for each port &ndash; the base addresses are at 1 KiB (0x0400) boundaries.</p>
+<pre>
+  offset  register       description
+  ======  ========       ===========
+   0x00   GPIO_MODER     port mode register
+   0x04   GPIO_OTYPER    output type register
+   0x08   GPIO_OSPEEDR   output speed (slew-rate) register
+   0x0c   GPIO_PUPDR     pull-up/pull-down register
+   0x10   GPIO_IDR       input data register
+   0x14   GPIO_ODR       output data register
+   0x18   GPIO_BSRR      bit set/reset register
+   0x1c   GPIO_LCKR      configuration lock register
+   0x20   GPIO_AFRL      alternate function low register (pins 0-7)
+   0x24   GPIO_AFRH      alternate function high register (pins 8-15)
+</pre>
+<p>We&rsquo;re going to ignore the GPIO_LCKR.</p>
+<h3 id="gpiomoder"><a href="#gpiomoder">GPIO_MODER</a></h3>
+<p>This register consists of 16 two-bit fields, one for each port pin. Bits 0 and 1 set the mode for pin 0; bits 2 and 3 for pin 1, etc.</p>
+<p>Here is the mode table for each pin:</p>
+<pre>
+  00  input
+  01  output
+  10  alternate function (AF)
+  11  analog
+</pre>
+<h3 id="gpiootyper"><a href="#gpiootyper">GPIO_OTYPER</a></h3>
+<p>This register has 1 bit per pin; it is only 16 bits wide.</p>
+<p>For any port pin that GPIO_MODER has configured as an output, OTYPER sets the drive configuration:</p>
+<pre>
+  0  push-pull (totem-pole) output
+  1  open-drain output
+</pre>
+<h3 id="gpioospeedr"><a href="#gpioospeedr">GPIO_OSPEEDR</a></h3>
+<p>This register consists of 16 two-bit fields, one for each port pin. Bits 0 and 1 set the mode for pin 0; bits 2 and 3 for pin 1, etc.</p>
+<p>Here is the output speed table for each pin:</p>
+<pre>
+  00  2 MHz (low speed)
+  01  25 MHz (medium speed)
+  10  50 MHz (fast speed)
+  11  100 MHz (fucking ridiculous!)
+</pre>
+<h3 id="gpiopupdr"><a href="#gpiopupdr">GPIO_PUPDR</a></h3>
+<p>This register consists of 16 two-bit fields, one for each port pin. Bits 0 and 1 set the mode for pin 0; bits 2 and 3 for pin 1, etc.</p>
+<p>Here is the pull-up/pull-down table for each pin:</p>
+<pre>
+  00  No pull-up or pull-down
+  01  Pull-up
+  10  Pull-down
+  11  Reserved (don't try this at home!)
+</pre>
+<h3 id="gpioidr"><a href="#gpioidr">GPIO_IDR</a></h3>
+<p>The input data register has 16 bits; the high 16 bits are reserved, and read as zero. When read, the register returns the logic level present on the pin (after synchronisation with the bus clock).</p>
+<h3 id="gpioodr"><a href="#gpioodr">GPIO_ODR</a></h3>
+<p>The output data register has 16 bits; the high 16 bits are reserved, and should be preserved as zero (the reset value).</p>
+<p>If the corresponding pin is configured as an output, the value of each of the low 16 bits is driven onto the pin.</p>
+<h3 id="gpiobsrr"><a href="#gpiobsrr">GPIO_BSRR</a></h3>
+<p>This register consists of two write-only bit masks, each 16-bits wide. The high half &ndash; bits 16 to 31 &ndash; is the <em>reset</em> mask. Writing a 1 to any of these bits <em>clears</em> bit N-16 in the GPIO_ODR.</p>
+<p>The low half &ndash; bits 0 to 15 &ndash; is the <em>set</em> mask. Writing a 1 to any of these bits <em>sets</em> the corresponding bit in the GPIO_ODR.</p>
+<p>By judiciously choosing a combined mask, it is possible to <em>set</em> and <em>reset</em> a combination of bits in the GPIO_ODR in one word-wide write.</p>
+<h3 id="gpioafrl-and-gpioafrh"><a href="#gpioafrl-and-gpioafrh">GPIO_AFRL and GPIO_AFRH</a></h3>
+<p>These two registers, each of which has 8 four-bit fields, describe which alternate function to attach to each port pin, when the corresponding bits in the GPIO_MODER configure the pin for the alternate function.</p>
+<p>GPIO_AFRL contains the multiplexer settings for port bits 0 to 7; GPIO_AFRH, for bits 8 to 15. The actual map from AF number to peripheral function is different for each chip, so I won&rsquo;t try to put a table here.</p>
+
+</div>
+
+<div id="footer">
+<hr />
+<a href="mailto:%77%65%62%68%61%6d%73%74%65%72%40%6e%69%6d%62%6c%65%6d%61%63%68%69%6e%65%73%2e%63%6f%6d?subject=STM32%20GPIO">Send feedback</a> on this page (last edited 2013 August 18 21:17)<br />
+Browse <a href="/all-pages/">all pages</a>, or return <a href="/">home</a>
+</div>
+
+</body>
+</html>

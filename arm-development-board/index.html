@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="copyright" content="All content on muforth.nimblemachines.com is copyrighted. All rights are reserved." />
+<meta name="robots" content="index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/-/screen.css" type="text/css" />
+<link rel="canonical" href="http://muforth.nimblemachines.com/arm-development-board/" />
+<title>ARM development board &ndash; muFORTH</title>
+</head>
+<body>
+
+<div id="header">
+<h1>ARM development board</h1>
+<hr />
+</div>
+
+<div id="content">
+<p>When this page was originally written &ndash; some time in 2006 &ndash; ARM7 processors were all the rage. I wanted at the time to document some of the boards then available. Of course, now those boards are all essentially obsolete. ARM&rsquo;s Cortex-M architecture is smaller and more efficient &ndash; though the instruction set, at least for the ARMv7-M variants (Cortex-M3 and -M4) is pretty darn complicated.</p>
+<p>I&rsquo;m leaving, for history&rsquo;s sake, the images and links on this page.</p>
+<p>But for current and future development, you would be much better served by looking at an <a href="/arm-cortex-m-development-board/">ARM Cortex-M development board</a>.</p>
+<hr />
+<p>My ARM AEB-1 looks like this:</p>
+<p><a href="http://www.flickr.com/photos/nimblemachines/124422455/"><img src="http://static.flickr.com/48/124422455_23e1555ba3.jpg" alt="AEB-1" title="AEB-1" /></a> <a href="http://static.flickr.com/48/124422455_23e1555ba3_o.jpg">bigger</a></p>
+<p>This is a relatively old board (from 1999 or 2000). It features:</p>
+<ul>
+<li>256k SRAM (the two chips on middle left);</li>
+<li>256k small-sector-writable Flash (lower-left, socketed);</li>
+<li>a Sharp LH77790 (ARM 7DI core), 24MHz processor (center).</li>
+</ul>
+<p>The processor has counters/timers/PWM, 2 serial ports, a watchdog timer, LCD interface, but no A/D or D/A. And, worst of all, it has only 2k of SRAM on chip (and a 2k cache); and because it has only a 16-bit-wide external bus, memory access, and therefore <em>execution</em>, is slowed.</p>
+<p>It&rsquo;s real hardware though, and I&rsquo;ve been able to use it to test my Forth code.</p>
+<hr />
+<p>Now there are nicer choices, of both board and CPU. I&rsquo;m excited about the <a href="http://www.semiconductors.philips.com/products/microcontrollers/32bit/index.html">Philips LPC2000 series</a> of small, ARM7TDMI-based microcontrollers. They are tiny, fast, cheap ... and out of control!</p>
+<p>The <a href="http://www.semiconductors.philips.com/pip/LPC2138FBD64.html">LPC213x</a> seems like a nice mix of features:</p>
+<ul>
+<li>60 MHz CPU in a tiny LQFP64 package</li>
+<li>one (LPC2131/32) or two (LPC2134/36/38) 8-channel 10-bit A/D converters</li>
+<li>single 10-bit D/A converter (LPC2132/34/36/38).</li>
+<li>two 32-bit timers/external event counters (with four capture and four compare channels each), PWM unit (six outputs) and watchdog</li>
+<li>low power real-time clock with independent power and dedicated 32 kHz clock input.</li>
+<li>multiple serial interfaces including two UARTs (16C550), two fast (400 kbit/s) I&sup2;C busses, SPI and SSP</li>
+<li>up to 47 5V-tolerant general purpose I/O pins</li>
+<li>up to nine edge- or level-sensitive external interrupt pins</li>
+</ul>
+<p>Read more about it:</p>
+<ul>
+<li><a href="http://www.semiconductors.philips.com/acrobat/datasheets/LPC2131_32_34_36_38_2.pdf">datasheet</a></li>
+<li><a href="http://www.semiconductors.philips.com/acrobat/usermanuals/UM10120_1.pdf">user manual</a></li>
+</ul>
+<p>There are several boards based on the 213x. Here are a few:</p>
+<hr />
+<h3 id="2006-april-12-14:20"><a href="#2006-april-12-14:20">2006 April 12 14:20</a></h3>
+<p>My new <a href="https://www.olimex.com/Products/ARM/NXP/LPC-P2138/">Olimex LPC-P2138</a> came today from <a href="http://www.sparkfun.com/">Spark Fun Electronics</a>. It cost me $70 plus $2 shipping via the US Postal Service! Here is what it looks like:</p>
+<p><a href="http://www.flickr.com/photos/nimblemachines/127611611/"><img src="http://static.flickr.com/48/127611611_6f0fc9e0fa.jpg" alt="My shiny new Olimex LPC-P2138!!" title="My shiny new Olimex LPC-P2138!!" /></a> <a href="http://static.flickr.com/48/127611611_6f0fc9e0fa_o.jpg">bigger</a></p>
+<p>It&rsquo;s rather small: only 120mm x 80mm!</p>
+<p><a href="https://www.olimex.com/Products/ARM/NXP/LPC-P2138/resources/LPC-P2138-schematic.pdf">Schematic</a></p>
+<hr />
+<p><a href="https://www.olimex.com/Products/ARM/NXP/LPC-H2138/">Olimex LPC-H2138</a>:</p>
+<p><img src="https://www.olimex.com/Products/ARM/NXP/LPC-H2138/images/LPC-H2138-01.jpg" alt="Olimex LPC-H2138" title="Olimex LPC-H2138" /></p>
+<p><a href="https://www.olimex.com/Products/ARM/NXP/LPC-H2138/resources/LPC-H2138-REV-B-SCH.gif">Schematic</a></p>
+<hr />
+<p>For those interested in USB development, there are (at least) two interesting ARM options. A development board:</p>
+<p><a href="https://www.olimex.com/Products/ARM/NXP/LPC-P2148/">Olimex LPC-P2148</a>:</p>
+<p><img src="https://www.olimex.com/Products/ARM/NXP/LPC-P2148/images/LPC-P2148-01.jpg" alt="Olimex LPC-P2148" title="Olimex LPC-P2148" /></p>
+<p><a href="https://www.olimex.com/Products/ARM/NXP/LPC-P2148/resources/LPC-P2148-schematic.pdf">Schematic</a></p>
+<p>and a smaller, cheaper, header-only board:</p>
+<p><a href="https://www.olimex.com/Products/ARM/NXP/LPC-H2148/">Olimex LPC-H2148</a>:</p>
+<p><img src="https://www.olimex.com/Products/ARM/NXP/LPC-H2148/images/LPC-H2148-01.jpg" alt="Olimex LPC-H2148" title="Olimex LPC-H2148" /></p>
+<p><a href="https://www.olimex.com/Products/ARM/NXP/LPC-H2148/resources/LPC-H2148-sch.gif">Schematic</a></p>
+<p>All these Olimex boards are available from <a href="http://sparkfun.com/">Sparkfun</a>.</p>
+
+</div>
+
+<div id="footer">
+<hr />
+<a href="mailto:%77%65%62%68%61%6d%73%74%65%72%40%6e%69%6d%62%6c%65%6d%61%63%68%69%6e%65%73%2e%63%6f%6d?subject=ARM%20development%20board">Send feedback</a> on this page (last edited 2013 August 08 18:44)<br />
+Browse <a href="/all-pages/">all pages</a>, or return <a href="/">home</a>
+</div>
+
+</body>
+</html>

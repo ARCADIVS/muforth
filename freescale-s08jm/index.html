@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="copyright" content="All content on muforth.nimblemachines.com is copyrighted. All rights are reserved." />
+<meta name="robots" content="index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/-/screen.css" type="text/css" />
+<link rel="canonical" href="http://muforth.nimblemachines.com/freescale-s08jm/" />
+<title>Freescale S08JM &ndash; muFORTH</title>
+</head>
+<body>
+
+<div id="header">
+<h1>Freescale S08JM</h1>
+<hr />
+</div>
+
+<div id="content">
+<p>The <a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=S08JM">S08JM</a> is an <a href="/freescale-hcs08/">S08</a> 8-bit microcontroller subfamily.</p>
+<p>I had big dreams of making an <span class="missing" title="arduino-killer">Arduino killer</span> using this part, but now that dirt-cheap 48 MHz ARM Cortex-M0+ parts have arrived, that time has largely past.</p>
+<p>This is still a really cool device. If you want a USB-capable, versatile, inexpensive, general-purpose 8-bit microcontroller, and are sold on the <a href="/freescale-hcs08/">S08</a> architecture, the S08JM is a great choice. You have to be able and willing to deal with LQFP packages, however. It&rsquo;s a bit disappointing that these chips aren&rsquo;t available in more &ldquo;approachable&rdquo; packages. The <span class="missing" title="microchip-pic">Microchip PIC</span> really wins in this regard. There are several PIC18 and PIC24 variants with built-in USB that come in DIP packages.</p>
+<p>It wasn&rsquo;t until <a href="/freescale/">Freescale</a> introduced the <a href="/freescale-s08js/">S08JS</a> subfamily in a friendlier-for-prototyping SOIC package that I jumped onto the USB bandwagon. I built a <span class="missing" title="js16-usb-board">JS16 USB board</span> that has for some time been my connection to all things microcontroller. Since the S08JM has a similar memory map and an identical USB interface, it should be trivial to get my USB code working on an S08JM &ndash; if I could make a board. (Actually, <a href="/dipmicro-electronics/">dipmicro</a> now sell an <a href="http://www.dipmicro.com/store/PCB-LQFP44-DIP44B">LQFP 44 0.8mm pitch breakout board</a> that would be <em>perfect</em> for this.)</p>
+<p>The S08JM is really two sub-subfamilies:</p>
+<h2 id="jm8-and-jm16"><a href="#jm8-and-jm16">JM8 and JM16</a></h2>
+<ul>
+<li>LQFP 32, LQFP 44, and QFN 48 packages</li>
+<li>24 MHz max bus clock</li>
+<li>8/1 KiB or 16/1 KiB of Flash/RAM</li>
+<li>256 bytes of dedicated USB RAM</li>
+<li>full-speed (12 Mbit) USB device interface with six uni-directional endpoints (in addition to bi-directional Endpoint 0)</li>
+<li>Two SCI interfaces (uarts) (one on 32-pin devices)</li>
+<li>Two SPI interfaces (one on 32-pin devices)</li>
+<li>One I2C interface</li>
+<li>One 2-channel and one 4-channel 16-bit timer (only 4 channels pinned out on 32-pin device)</li>
+<li>8-channel 12-bit ADC (4-channel on 32-pin devices)</li>
+</ul>
+<h2 id="jm32-and-jm60"><a href="#jm32-and-jm60">JM32 and JM60</a></h2>
+<ul>
+<li>LQFP 44, QFN 48, LQFP 64, and QFP 64 packages</li>
+<li>24 MHz max bus clock</li>
+<li>32/2 KiB or 60/4 KiB of Flash/RAM</li>
+<li>256 bytes of dedicated USB RAM</li>
+<li>full-speed (12 Mbit) USB device interface with six uni-directional endpoints (in addition to bi-directional Endpoint 0)</li>
+<li>Two SCI interfaces (uarts)</li>
+<li>Two SPI interfaces</li>
+<li>One I2C interface</li>
+<li>One 2-channel and one 4-channel 16-bit timer (2nd timer has 6 channels on 64-pin devices)</li>
+<li>8-channel 12-bit ADC (12-channel on 64-pin devices)</li>
+</ul>
+
+</div>
+
+<div id="footer">
+<hr />
+<a href="mailto:%77%65%62%68%61%6d%73%74%65%72%40%6e%69%6d%62%6c%65%6d%61%63%68%69%6e%65%73%2e%63%6f%6d?subject=Freescale%20S08JM">Send feedback</a> on this page (last edited 2013 August 26 23:52)<br />
+Browse <a href="/all-pages/">all pages</a>, or return <a href="/">home</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>http://muforth.nimblemachines.com/arm-architecture/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/arm-cortex-m-development-board/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/arm-development-board/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/frdm-k20d50m/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/frdm-kl25z/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/frdm-kl46z/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/freescale/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/freescale-freedom-board/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/freescale-hc08/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/freescale-hcs08/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/freescale-s08jm/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/freescale-s08js/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/freescale-s08qe/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/freescale-s08qg/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/muforth-cross-compiler/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/muforth-diary/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/muforth-readme/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/muforth-spelling/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/muforth-threading/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/stm32-gpio/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/stm32f0-discovery/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/stm32f4-discovery/</loc></url>
+</urlset>

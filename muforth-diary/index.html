@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="copyright" content="All content on muforth.nimblemachines.com is copyrighted. All rights are reserved." />
+<meta name="robots" content="index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/-/screen.css" type="text/css" />
+<link rel="canonical" href="http://muforth.nimblemachines.com/muforth-diary/" />
+<title>MuFORTH diary &ndash; muFORTH</title>
+</head>
+<body>
+
+<div id="header">
+<h1>MuFORTH diary</h1>
+<hr />
+</div>
+
+<div id="content">
+<h3 id="2008-april-19-12:07"><a href="#2008-april-19-12:07">2008 April 19 12:07</a></h3>
+<p>I spend the two weeks leading up to my March 30 <a href="http://dorkbotpdx.org/">DorkbotPDX</a> <a href="http://vimeo.com/859408">talk</a> working furiously on <span class="missing" title="muforth">muFORTH</span>. By comparing the date today with that of the last entry, you get an idea of just how desultory my work on this project really is. Argh.</p>
+<p>I&rsquo;m not sure how to characterise the changes. I did a lot of cleaning &ndash; removing files that didn&rsquo;t belong in the repo, removing the generic control structure code, letting go of the idea that I might want both a threaded and a native version, and considering ways to make the bootstrapping even deeper.</p>
+<p>I have the makings of an <span class="missing" title="avr-assembler">AVR assembler</span>, but have made no progress on the ARM or AVR metacompilers. I need to get back to those.</p>
+<p>The code is in <a href="http://github.com/nimblemachines/muforth/tree/master/">Git</a>.</p>
+<p>The best way to see what I&rsquo;ve been up to is to clone the repo and do <em>git log</em> or <em>git log -p</em> (to see the diffs of each change).</p>
+<hr />
+<h3 id="2006-april-12-12:55"><a href="#2006-april-12-12:55">2006 April 12 12:55</a></h3>
+<p>Made the control structure compiling code generic, so that it can be used by <span class="missing" title="muforth">muFORTH</span> and also by the metacompiler. And, in fact &ndash; if I ever revive the native-coded version of <span class="missing" title="muforth">muFORTH</span> &ndash; by the native compiler as well.</p>
+<p>Back to my taxes... and the metacompiler...</p>
+<hr />
+<h3 id="2006-april-12-01:23"><a href="#2006-april-12-01:23">2006 April 12 01:23</a></h3>
+<p>Taking a break from the metacompiler. I&rsquo;m supposed to be doing my taxes... But I managed to get my head around two things that were broken and to fix them.</p>
+<p>Number input allows punctuation in numbers (any combination of : / &ndash; , . _); this is not new (to Forth), but I thought it would be useful. The trouble: bare punctuation, with no digits, was accepted as the number zero!</p>
+<p>This wreaked havoc with the metacompiler, since some words that hadn&rsquo;t been defined yet weren&rsquo;t being flagged, because they sneaked by as numbers. This is now fixed.</p>
+<p>I also revamped, completely, the way that <code class="forth">create</code> and <code class="forth">does></code> work. Maybe I understand them now. I got them wrong earlier. I had this idea that I wanted to be &ldquo;innovative&rdquo; &ndash; mostly because when <span class="missing" title="muforth">muFORTH</span> started out it was native-compiled, and I didn&rsquo;t want to mix code and data (for cache reasons, among others). So words defined by <code class="forth">create</code> had only a single constant in their bodies. This constant could be an arbitrary number &ndash; a bit pattern used to assemble an instruction, maybe &ndash; or could be a pointer into the data area, where a volatile value &ndash; a variable, perhaps &ndash; lived.</p>
+<p>That part makes sense still. But my implementation was all wrong. After studying the <span class="missing" title="fig-forth">fig-FORTH</span> way (again), and looking carefully at the ANS Forth spec, I came to the following radical conclusion:</p>
+<p><em><code class="forth">constant</code> is more fundamental than <code class="forth">create</code></em>.</p>
+<p>This is true when the bodies of create words live elsewhere than in the dictionary.</p>
+<p>That&rsquo;s all I have to say about it right now. ;-)</p>
+<hr />
+<h3 id="2006-april-08-17:48"><a href="#2006-april-08-17:48">2006 April 08 17:48</a></h3>
+<p>I think I&rsquo;ve figured out how to metacompile <code class="forth">create</code> and <code class="forth">does></code>. I&rsquo;m implementing that now, and also writing a bit about Forth, its history &amp; its implementation (as I understand it.)</p>
+<hr />
+<h3 id="2006-april-04-15:39"><a href="#2006-april-04-15:39">2006 April 04 15:39</a></h3>
+<p>Inlining of one-instruction opcodes and tail recursion are now implemented and working. I can turn them on and off independently.</p>
+<p>I&rsquo;ve been thinking about defining words, but they&rsquo;re still hurting my head a little.</p>
+<hr />
+<h3 id="2006-april-03-19:32"><a href="#2006-april-03-19:32">2006 April 03 19:32</a></h3>
+<p>Woohoo!!!</p>
+<p>I just got my first code working. There are 4 LEDs on my board; I&rsquo;m counting in binary from 0 to 15, over and over, and using an SWI to send chars back to the host!</p>
+<hr />
+<h3 id="2006-april-03-17:11"><a href="#2006-april-03-17:11">2006 April 03 17:11</a></h3>
+<p>I&rsquo;ve got enough of an ARM kernel, and enough meta-compiler bits to compile control structures (if/then, begin/while/repeat/until/again), code words, and colon words.</p>
+<p>Now I need to figure out which SWIs are available on my (old) ARM AEB-1 development board, so I can write some Forth code to &ldquo;print&rdquo; to the serial line. Then download and run my first ARM Forth code!</p>
+<hr />
+<h3 id="2006-april-03-12:17"><a href="#2006-april-03-12:17">2006 April 03 12:17</a></h3>
+<p>I have changed the names of all the <span class="missing" title="muforth">muFORTH</span> pages, except the main one (that I just linked to back there), from "<span class="missing" title="muforth-foobar">muFORTH foobar</span>" into "<span class="missing" title="muforth-foobar">muFORTH foobar</span>" (note lowercase f in Muforth). This way when the pages are rendered into HTML they&rsquo;ll have titles like &ldquo;Muforth Foobar&rdquo; instead of &ldquo;Mu Forth Foobar&rdquo;, and will be better indexed by web spiders.</p>
+<hr />
+<h3 id="2006-april-03-03:36"><a href="#2006-april-03-03:36">2006 April 03 03:36</a></h3>
+<p>It&rsquo;s late/early!</p>
+<p>Got the basic kernel compiled. Found some bugs in the assembler &ndash; part of the point of the process.</p>
+<p>I&rsquo;m ready to dig into the meta-compiler!</p>
+<hr />
+<h3 id="2006-april-03-01:28"><a href="#2006-april-03-01:28">2006 April 03 01:28</a></h3>
+<p>Today, or really <em>yesterday</em> since it&rsquo;s after midnight (PDT!) as I write this, I ripped apart the <span class="missing" title="arm-assembler">ARM assembler</span> and rewrote it. What I have now is a subset of what I had, which was, in turn, a superset of what was required. There are still a few necessary bits missing, but the hard part is done.</p>
+<p>I had a crazy idea, when I wrote the original, that it would be a good idea to have tagged data on the stack, so you can tell which bits are registers, offsets, etc. I did the same thing when I wrote a Forth assembler for the Intel architecture (aka x86); it worked &ndash; unlike every other Forth assembler for x86 I have ever used! &ndash; but it was a bit baroque.</p>
+<p>The old <span class="missing" title="arm-assembler">ARM assembler</span> suffered the same affliction. The new one is a lot simpler, and smaller, and I&rsquo;m much happier with it.</p>
+<p>I&rsquo;ve launched into writing the <span class="missing" title="muforth">muFORTH</span> kernel, in <span class="missing" title="arm-assembler">ARM assembler</span>.</p>
+<hr />
+<h3 id="2006-april-01-16:17"><a href="#2006-april-01-16:17">2006 April 01 16:17</a></h3>
+<p>Trying to design the <a href="/muforth-cross-compiler/">muFORTH cross compiler</a>. I&rsquo;ve written ... let&rsquo;s see ... three cross-compilers in Forth so far, and yet I still don&rsquo;t feel I know how to do it!</p>
+<hr />
+<h3 id="2006-march-30-22:49"><a href="#2006-march-30-22:49">2006 March 30 22:49</a></h3>
+<p>Phew! I just checked in a clean copy of the ITC version (trunk) of <span class="missing" title="muforth">muFORTH</span>. It&rsquo;s still slower than native (about 4x), but I don&rsquo;t care! For my purposes &ndash; cross-compiling &ndash; it will be more than fast enough.</p>
+<p>I&rsquo;ve tried to clean up the code as much as possible. This feels like a solid version. Please <a href="http://github.com/nimblemachines/muforth/tree/master">check it out</a>!</p>
+<hr />
+<h3 id="2006-march-27-19:20"><a href="#2006-march-27-19:20">2006 March 27 19:20</a></h3>
+<p>Right now I&rsquo;m thinking about <a href="/muforth-threading/">muFORTH threading</a>, and how to make it better. I borrowed some of <span class="missing" title="michael-pruemm">Michael Pruemm</span>'s ideas (see <span class="missing" title="xi-forth-diary">xi Forth diary</span>) but got them wrong, so my ITC muFORTH is about 7x slower than the native code, which wasn&rsquo;t all that highly optimized. I&rsquo;d like to see more like 2x.</p>
+
+</div>
+
+<div id="footer">
+<hr />
+<a href="mailto:%77%65%62%68%61%6d%73%74%65%72%40%6e%69%6d%62%6c%65%6d%61%63%68%69%6e%65%73%2e%63%6f%6d?subject=MuFORTH%20diary">Send feedback</a> on this page (last edited 2009 September 11 14:35)<br />
+Browse <a href="/all-pages/">all pages</a>, or return <a href="/">home</a>
+</div>
+
+</body>
+</html>

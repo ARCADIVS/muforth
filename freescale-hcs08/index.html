@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="copyright" content="All content on muforth.nimblemachines.com is copyrighted. All rights are reserved." />
+<meta name="robots" content="index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/-/screen.css" type="text/css" />
+<link rel="canonical" href="http://muforth.nimblemachines.com/freescale-hcs08/" />
+<title>Freescale HCS08 &ndash; muFORTH</title>
+</head>
+<body>
+
+<div id="header">
+<h1>Freescale HCS08</h1>
+<hr />
+</div>
+
+<div id="content">
+<p>The <a href="http://www.freescale.com/webapp/sps/site/taxonomy.jsp?code=HCS08">HCS08</a> &ndash; hereafter called the S08 &ndash; is <a href="/freescale/">Freescale</a>'s current 8-bit microcontroller family. It is a minor update of the <a href="/freescale-hc08/">HC08</a> family, which was a major update of the <span class="missing" title="hc05">HC05</span>. Freescale retained binary (object) code backwards compatibility &ndash; that is, the HC05 instruction set is a strict subset of the HC08, and the HC08 is a strict subset of the S08 &ndash; but because the memory map and peripheral blocks have fundamentally changed during these evolutions, it&rsquo;s unlikely that any <em>actual</em> HC05 binary code would run on HC08, let alone an S08.</p>
+<p>So, why use an S08 rather than an HC08?</p>
+<h2 id="features"><a href="#features">Features</a></h2>
+<p>The S08 adds the following to the HC08:</p>
+<ul>
+<li>pipelined CPU</li>
+<li><span class="missing" title="background-debug-mode">background debug mode</span> (BDM) &ndash; a single-wire non-intrusive debug connection</li>
+<li>built-in on-chip debug resources (watchpoint, breakpoint)</li>
+<li>a new BGND instruction (halts CPU and enters debug mode)</li>
+<li>new addressing modes for a few instructions (LDHX, STHX, CPHX) to improve stack efficiency</li>
+<li>improved peripherals</li>
+<li>sophisticated and flexible clock generation</li>
+<li>two voltage range families: 3 V (1.8 to 3.6 V), and 5 V (2.7 to 5.5 V)</li>
+</ul>
+<p>The pipelined CPU, while it can take one more bus clock than the HC08 for some instructions, can be run <em>much</em> faster. The HC08 tops out at 8 MHz, while many S08 variants can run at 20 MHz, and a few at 25 MHz.</p>
+<p>Background debug mode (BDM) replaces the HC08&rsquo;s ROM bootloader, which implemented a quirky and inefficient bit-banged serial interface. BDM is much faster, and can be used to inspect memory and I/O registers even while the CPU core is running. It&rsquo;s much more like something you&rsquo;d see on a 32-bit microcontroller &ndash; but it&rsquo;s built-in to every S08, even if it only costs $0.50.</p>
+<p>The clock generators are also <em>really</em> cool. Take, for example, the ICS (internal clock source), the clock generation block found on most newer S08 subfamilies. It combines an external oscillator (to drive an external crystal or resonator), an internal oscillator (trimmable within 0.2% from 31.25 kHz to 39.0625 kHz), and an FLL (frequency-locked loop) with a divider that can be used to multiply either the internal or external oscillator up to 40 MHz.</p>
+<p>Mode switching is done completely in software, so the configuration is very flexible. At power-on-reset (POR), the internal oscillator and FLL are configured for a bus clock of 4 MHz (nominally). Nine bits of trim can be stored in flash and written to the ICS at reset to set the frequency very accurately. I&rsquo;ve successfully used the trim to set a bus clock of 9.216 MHz, which is an integral multiple of 115,200. The ICS clock is stable and accurate enough to drive a UART without a crystal!</p>
+<h2 id="references"><a href="#references">References</a></h2>
+<p>For the full story, read the <a href="http://cache.freescale.com/files/microcontrollers/doc/ref_manual/HCS08RMV1.pdf">S08 family reference manual</a>. Freescale&rsquo;s book <a href="http://cache.freescale.com/files/microcontrollers/doc/ref_manual/M68HC05TB.pdf"><em>Understanding small microcontrollers</em></a> is a tutorial introduction to their <span class="missing" title="hc05">HC05</span> microcontroller family. Since the <span class="missing" title="hc05">HC05</span> is a predecessor (ancestor?) of the S08 and shares much of the instruction set with it, much of that book would be relevant to the S08.</p>
+<h2 id="suggested-subfamilies-for-experimentors"><a href="#suggested-subfamilies-for-experimentors">Suggested subfamilies for experimentors</a></h2>
+<p>I have some &ldquo;favorite&rdquo; S08 parts. There are many subfamilies, some designed for very specific uses. But there are also good general-purpose parts. Here is a short list of my favorites.</p>
+<h3 id="s08qg"><a href="#s08qg"><a href="/freescale-s08qg/">S08QG</a></a></h3>
+<p>This is the first S08 part I got working. I ordered a few samples of the S08QG8 in a DIP 16 package, along with a few <a href="http://cache.freescale.com/files/microcontrollers/doc/data_sheet/MC68HC908QB.pdf">908QB8</a>s. I ended up using the 908s to &ldquo;bootstrap&rdquo; the QG8s, via the <span class="missing" title="background-debug-mode">background debug mode</span> (BDM) pin on the QG.</p>
+<p>With the exception of a serious silicon erratum on the parts that I have &ndash; which suggests running the part at half speed (5 MHz) because the clock doesn&rsquo;t run reliably at 10 MHz &ndash; I like these parts. 8 KiB of flash, a UART, a 16-bit timer with two capture/compare channels (thus two channels of hardware PWM) &ndash; all on a DIP 16 that costs $1.</p>
+<h3 id="s08qe"><a href="#s08qe"><a href="/freescale-s08qe/">S08QE</a></a></h3>
+<p>An upgrade to the <a href="/freescale-s08qg/">S08QG</a>. This comes in the same flavours as the QG (DIP 16, 4 KiB and 8 KiB flash) but also in larger packages with more flash and RAM &ndash; up to 128 KiB flash.</p>
+<p>The <a href="/freescale-s08qe/">S08QE</a>32 in SOIC 28 is a <em>really</em> nice sweet spot. They cost around $2, are easy to prototype (with <a href="/dipmicro-electronics/">dipmicro</a>'s <a href="http://www.dipmicro.com/store/PCB-PB1">proto boards</a>, or other SOIC &ldquo;breakout&rdquo; boards), have 12 timer channels and two UARTs, and run at 25 MHz.</p>
+<h3 id="s08js"><a href="#s08js"><a href="/freescale-s08js/">S08JS</a></a></h3>
+<p>This is an interesting chip. Unlike most other S08&rsquo;s, which must be programmed by external means using BDM, the JS has a USB bootloader in ROM, making it very easy to prototype with. (See my instructions for building a <span class="missing" title="js16-usb-board">JS16 USB board</span>.) It&rsquo;s also very cheap &ndash; $1.50 or so in unit quantity &ndash; but unfortunately only comes in an SOIC package, so it&rsquo;s not quite as approachable as a <span class="missing" title="microchip-pic">Microchip PIC</span> USB part in a DIP. But it&rsquo;s not too bad. I&rsquo;m not great with a soldering iron, but I was able to put together two JS16 boards in a few hours, and both worked the first time (the ROM bootloader successfully enumerated over USB).</p>
+<h3 id="s08jm"><a href="#s08jm"><a href="/freescale-s08jm/">S08JM</a></a></h3>
+<p>This is a sort of &ldquo;upgrade&rdquo; of the <a href="/freescale-s08js/">S08JS</a>, even though it came first. It&rsquo;s more like a cross between the <a href="/freescale-s08qe/">S08QE</a> and the <a href="/freescale-s08js/">S08JS</a> &ndash; USB interface, a good selection of timers, UARTs, etc, and up to 60 KiB of flash. Unlike the S08JS, it has no ROM bootloader, so it must be programmed over BDM. And it only comes in LQFP packages.</p>
+
+</div>
+
+<div id="footer">
+<hr />
+<a href="mailto:%77%65%62%68%61%6d%73%74%65%72%40%6e%69%6d%62%6c%65%6d%61%63%68%69%6e%65%73%2e%63%6f%6d?subject=Freescale%20HCS08">Send feedback</a> on this page (last edited 2014 January 06 23:45)<br />
+Browse <a href="/all-pages/">all pages</a>, or return <a href="/">home</a>
+</div>
+
+</body>
+</html>

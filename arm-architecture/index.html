@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="copyright" content="All content on muforth.nimblemachines.com is copyrighted. All rights are reserved." />
+<meta name="robots" content="index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/-/screen.css" type="text/css" />
+<link rel="canonical" href="http://muforth.nimblemachines.com/arm-architecture/" />
+<title>ARM architecture &ndash; muFORTH</title>
+</head>
+<body>
+
+<div id="header">
+<h1>ARM architecture</h1>
+<hr />
+</div>
+
+<div id="content">
+<p><a href="http://www.arm.com/"><img src="/-/armpower.gif" alt="ARM powered! logo" title="ARM powered! logo" /></a></p>
+<p>ARM now stands for <a href="http://www.arm.com/">Advanced RISC Machines</a>. It used to stand for Acorn RISC Machines. A tiny British computer company called Acorn initially developed the ARM CPU core, later spinning it off into today&rsquo;s ARM, the company.</p>
+<p>Developed in 1985, the ARM architecture has been coming into its own over the years, and now with the advent of tiny Flash-based microcontrollers like the <a href="http://www.semiconductors.philips.com/pip/LPC2106.html">Philips LPC2106</a>, it is really poised to take over the world.</p>
+<p>The ARM architecture is interesting in several respects. It clearly has a RISC lineage, but the designers were also careful to make it a good &ldquo;target&rdquo; for humans writing in assembler, in addition to being a good target for C compilers. Unlike many of its RISC cousins designed for cost-is-no-object high-end servers and workstations, the ARM was designed as a &ldquo;low-end&rdquo; architecture. It was, in fact, originally conceived to replace the 6502 in a new line of Acorn computers.</p>
+<p>The core was designed to be small, simple, and very low power. The first core had around 28000 transistors (IIRC). I think modern ARM7 cores are about 32000 transistors. Not being a VLSI wonk, I&rsquo;m not sure how transistors equate with feature size, but with modern CMOS processes (like 0.18micron) an ARM core is <em>tiny</em>. (ARM claim 0.53 mm^2 for the &ldquo;hard macro&rdquo; (7TDMI) core without cache, and 0.62mm^2 for the synthesizable (7TDMI-S) core without cache. Tiny indeed.)</p>
+<hr />
+<p>ARM (the company) have always been very forthcoming in their documentation. One thing that appeals to me about the architecture is that the company behind it talks explicitly about tradeoffs, limitations, making the best use of quirks, etc. Their documentation is helpful, friendly, pragmatic, and clearly written by engineers who know their stuff. The internals of the JTAG debug unit are especially interesting, and in my (limited) experience, most companies leave these things helpfully undocumented.</p>
+<div class="voice2">
+<p>Hrm. Well, I have to take back some of this. It turns out that as time has passed they have become increasingly <em>less</em> forthcoming, and every time they redesign their web site, it becomes harder to navigate. These days the &ldquo;technical manuals&rdquo; that document their CPU cores (they used to call them &ldquo;datasheets&rdquo;) lack any useful information about the instruction set, beyond a very sketchy summary. Their web site even suggests that to learn more about the ARM instruction sets (there are now two point three of them: the native (original) ARM set, the Thumb set (a 16-bit wide &ldquo;projection&rdquo;), and the Thumb-2 set (Thumb with some additions)) that you should <em>buy</em> the book about ARM published by Addison-Wesley! Ridiculous.</p>
+<p>They also used to publish a sort of &ldquo;cookbook&rdquo; that offered some really interesting insights into writing efficient C and ARM assembler code. That document is nowhere to be seen. The available application notes cover some but not all of that territory.</p>
+<p>We should all write them angry letters, and we should suggest that everyone we know (who is interested in ARM) do the same.</p>
+<p>In the short term, here is an <a href="/-/ARM7TDMIvE.pdf">older copy of the ARM 7TDMI datasheet</a> &ndash; with information about the ARM and Thumb instruction sets! Unfortunately I only have a paper copy of the cookbook, so I can&rsquo;t post it here.</p>
+<p>I have also found, online, a copy of the <a href="http://www.deetc.isel.ipl.pt/microprocessadores/recursos/arm/arm/DDI0100E.pdf">ARM Architecture Reference Manual</a> (or ARM ARM). A <strong>warning</strong>: this file is <em>big</em> (about 13M). This is, I think, the Addison-Wesley book that ARM would like all of us to purchase.</p>
+</div>
+<hr />
+<p>The best introduction, though not a friendly tutorial, is the <a href="http://www.arm.com/products/CPUs/ARM7TDMI.html">7TDMI</a> <a href="http://www.arm.com/pdfs/DDI0210B_7TDMI_R4.pdf">reference manual</a>. This [no longer very] encyclopedic document describes the programmer&rsquo;s view of the chip, the memory interface, the coprocessor interface, and the Debug unit. The 7TDMI (7 is a series number, currently the &ldquo;lowest end&rdquo; ARM; T=Thumb, D=Debug, M=Multiplier, I=Icebreaker/EmbeddedIce) is the most popular core. It&rsquo;s showing up everywhere, and is the heart of the <a href="http://www.semiconductors.philips.com/products/microcontrollers/32bit/index.html">Philips LPC2000 series</a>.</p>
+<p>There is lots more <a href="http://www.arm.com/documentation/">documentation</a> available from ARM. [Though not as much as there used to be.]</p>
+<hr />
+<p>In addition to the Philips/NXP chips, there are other sources of interesting embedded ARMs:</p>
+<ul>
+<li>Atmel <a href="http://www.atmel.com/products/AT91/">AT91SAM</a> smart ARM controllers</li>
+<li>Texas Instruments <a href="http://www.ti.com/tms470">TMS470 family</a></li>
+<li>Analog Devices <a href="http://www.analog.com/en/subCat/0,2879,762%255F%255F0%255F%255F0%255F,00.html">ARM-based and 8051-based MCUs</a></li>
+</ul>
+<hr />
+<p>There are nifty (and inexpensive) <a href="/arm-development-board/">ARM development board</a>s available.</p>
+<hr />
+<p>I&rsquo;ve wanted, for years, to put Forth on an ARM. It&rsquo;s <em>perfect</em> for it. I&rsquo;ve done a lot of the design work; I just have to implement. Hopefully I will soon revive my on-hold <span class="missing" title="muforth">muFORTH</span> project; I have most of what I need to develop for the ARM: a full-featured assembler and disassembler, a memory &ldquo;exploration&rdquo; mode, the framework of the target compiler. I just need to write the rest of the darn thing.</p>
+<p>I&rsquo;ve started an <span class="missing" title="arm-forth">ARM Forth</span> page, with links to related pages.</p>
+<p>If this sounds interesting, <a href="mailto:%77%65%62%68%61%6d%73%74%65%72%40%6e%69%6d%62%6c%65%6d%61%63%68%69%6e%65%73%2e%63%6f%6d?subject=ARM%20architecture">harangue</a> me about it. Maybe it&rsquo;ll get done faster that way. ;-)</p>
+
+</div>
+
+<div id="footer">
+<hr />
+<a href="mailto:%77%65%62%68%61%6d%73%74%65%72%40%6e%69%6d%62%6c%65%6d%61%63%68%69%6e%65%73%2e%63%6f%6d?subject=ARM%20architecture">Send feedback</a> on this page (last edited 2015 April 19 09:20)<br />
+Browse <a href="/all-pages/">all pages</a>, or return <a href="/">home</a>
+</div>
+
+</body>
+</html>

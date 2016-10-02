@@ -1,0 +1,434 @@
+/*
+ * Style sheet for nimblemachines.com
+ */
+
+/* Import some awesome fonts! */
+@import url(http://fonts.googleapis.com/css?family=Alegreya+Sans:400,500,400italic,500italic|Alegreya:400italic,700italic,400,700|Ubuntu+Mono:400,700|Inconsolata:400,700);
+
+/* Margins etc specified as top right bottom left */
+
+
+/* Default styles for all devices */
+body {
+  margin: 0.5em;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  font-variant-numeric: lining-nums proportional-nums;
+}
+
+a:link a:visited a:active a:hover {
+  text-decoration: underline;
+}
+
+div#header, div#content, div#footer {
+  margin: 1em 0 0 0;
+}
+
+
+/* desktop-ish device? */
+/* XXX this value from Twitter Bootstrap */
+/* @media (min-width: 992px) { */
+@media (min-width: 900px) {
+body {
+  /*  border: blue solid 1px; */
+  margin: 0px;
+}
+
+div#header, div#content {
+  margin: 1pc 3pc 0pc 8pc;
+  width: 37pc;
+}
+
+/* XXX until until I change the footer style... */
+div#footer {
+  margin: 1pc 3pc 2pc 8pc;
+  width: 37pc;
+}
+
+a:link {
+  text-decoration: underline;
+}
+
+a:visited {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* All of these buttons live in the left margin */
+div#header a.edit, div#header a.sticky, div#header a.home {
+  margin: 0 0 0 -56px;
+  float: left;
+}
+
+div#header img#avatar {
+  margin: 0 0 0 -80px;
+  float: left;
+  width: 4em;
+  height: 4em;
+}
+
+/* stickypage link is _below_ edit */
+div#header a.sticky {
+  margin-top: 40px;
+}
+
+/* homepage link is _below_ sticky */
+div#header a.home {
+  margin-top: 80px;
+}
+
+} /* end @media desktop-ish */
+
+
+a img {
+  border: none;
+}
+
+div#footer a img {
+  margin: 0px 10px 0px 0px;
+}
+
+img#icon {
+  /* border: solid black 1px; */
+  margin:  0 0 0 0;
+  padding: 0;
+  float: right;
+}
+
+div#header h1 {
+/*  border: solid blue 1px; */
+  margin: 0 0 0 0;
+  padding: 0;
+  color: #336699;
+  font-family: Alegreya Sans, sans-serif;
+  font-weight: 500;
+  font-size: 300%;
+  letter-spacing: -0.04em;
+  word-spacing: 0.1em;
+}
+
+div#header h1 a {
+  color: #336699;
+}
+
+div#header hr {
+  margin: 0;
+  border: solid #336699;
+  border-width: 2px 0 0 0;
+}
+
+pre {
+  clear: right;  /* so it can't run into icon */
+}
+
+div#content {
+/*  border: solid green 1px; */
+/*  background: #eeeecc; */
+  font-family: Alegreya, serif;
+  font-weight: 400;
+}
+
+div#footer {
+  clear: right;  /* so it can't run into icon */
+/*  border: solid teal 1px; */
+/*  background: #cceeee; */
+/* font-size: 80%; */
+  font-family: Alegreya, serif;
+  font-weight: 400;
+  font-style: italic;
+/*  background-color: #336699; */
+/*  text-align: center; */
+/*  color: white; */
+}
+
+div#content h2, div#content h3, div#content h4, div#content h5, div#content h6 {
+  margin-top: 0.33em;
+  margin-bottom: 0.16em;
+/*  border: black solid 1px; */
+  font-family: Alegreya Sans, sans-serif;
+  font-weight: 500;
+}
+
+/*
+ * Since headings in the content now link to themselves (so it's easy to
+ * bookmark or share links into pages), style the <a> elements like text, not
+ * links.
+ */
+div#content h2 a, div#content h3 a, div#content h4 a, div#content h5 a,
+div#content h6 a {
+  text-decoration: none;
+  color: black;
+}
+
+div#content h2 { font-size: 240%; }
+div#content h3 { font-size: 200%; }
+div#content h4 { font-size: 160%; }
+div#content h5 { font-size: 125%; }
+div#content h6 { font-size: 100%; }
+
+div#content p {
+/*  border: black solid 1px;*/
+  margin-top: 0pt;
+  margin-bottom: 1em;
+}
+
+/* hrules in the document can be styled separately from the footer hrule */
+div#content hr {
+  border: solid gray;
+  border-width: 1px 0 0 0;
+  margin: 1em 0; /* vert horz */
+}
+
+div#footer hr {
+  border: solid gray;
+  border-width: 1px 0 0 0;
+  margin: 1pc 0;
+}
+
+div.voice2 /*, div.voice2 a */ {
+  color: #008000;
+  margin: 0 -1pc 0 1pc;
+}
+
+div.voice3 /*, div.voice3 a */ {
+  color: #000080;
+  margin: 0 -1pc 0 1pc;
+}
+
+div.voice4 /*, div.voice4 a */ {
+  color: #800000;
+  margin: 0 -1pc 0 1pc;
+}
+
+div.voice5 /*, div.voice5 a */ {
+  color: #008080;
+  margin: 0 -1pc 0 1pc;
+}
+
+div.voice6 /*, div.voice6 a */ {
+  color: #800080;
+  margin: 0 -1pc 0 1pc;
+}
+
+div.voice7 /*, div.voice7 a */ {
+  color: #808000;
+  margin: 0 -1pc 0 1pc;
+}
+
+div.voice8 /*, div.voice8 a */ {
+  color: #808080;
+  margin: 0 -1pc 0 1pc;
+}
+
+.changed {
+  background: #ffdddd;
+}
+
+a.missing {
+  background: #ddffdd;
+/*  color: #cc00cc; */
+}
+
+div.missingpages h2 {
+  margin-bottom: 0;
+/*  border: 1px solid green; */
+}
+
+div.missingpages ul {
+  margin-top: 0;
+/*  list-style-image: none;  /* no ugly bullets */
+/*  border: 1px solid red; */
+}
+
+div.missingpages li {
+  display: block;  /* trying to turn off the bullet above doesn't work! */
+}
+
+blockquote {
+  margin: 15px 30px 0 10px;
+  padding-left: 20px;
+  border-left: 5px solid #ddd;
+}
+
+/* stuff for flickr badge */
+div.flickr_badge_image {
+  display: inline;
+  margin: 0px;
+  padding: 0px;
+}
+
+.flickr_badge_image img {
+  border: 1px solid black;
+/*  margin: 5px 5px 5px 5px; */
+  margin:  5px;
+  padding: 0px;
+
+/* This is very interesting. There was a "bug", it seemed, that there was
+  extra space at the bottom of the div enclosing the pix. Why? Well, it
+  seems that the images defaulted to
+    vertical-align: baseline;
+  which wants to put in "leading" below the baseline. Setting
+    vertical-align: bottom;
+  solves the extra space problem, but looks bad; setting
+    vertical-align: middle;
+  looks nice. ;-)
+*/
+  vertical-align: middle;
+}
+
+div.flickr_badge {
+/*  background-color: #CCCCCC; */
+  margin: 0;
+  padding: 0px;
+  text-align: left;
+}
+
+/* Let's make code and pre look good. */
+code, pre {
+  font-family: Inconsolata, Ubuntu Mono, monospace;
+  font-size: 100%;
+}
+
+pre {
+  margin: 1.5em 0;
+  font-size: 100%;
+}
+
+/* man page links */
+code.man {
+  font-family: serif;
+  font-style: italic;
+}
+
+/* git commands */
+code.git-command {
+  font-family: serif;
+  font-weight: normal;
+}
+
+/* Forth markup!! (Sorry, Michael!) */
+/* For inline Forth code we want some space around the element. */
+code.forth {
+  font-weight: bold;
+  font-size: 100%;
+  margin: 0 0.2em;
+  color: #800000;
+}
+
+/* Set this up like pre, plus Forth color */
+div.voiceforth {
+  margin: 1.5em 0;
+  font-family: Inconsolata, Ubuntu Mono, monospace;
+  font-size: 100%;
+  color: #800000;
+}
+
+/* multiline li's are hard to read unless separated */
+div#content li {
+  margin: 0 0 0.25em 0;
+}
+
+/* comments! */
+p.comment {
+  display: none;
+}
+
+/*
+ * Colour palettes! 
+ *
+ * NOTE: the <span> elements have to float left, otherwise they have zero width
+ * and are not rendered. If you put a border on them you will see this.
+ *
+ * In order to return to "normal" after displaying a palette, therefore, we add
+ * a div.palette-break, which, being clear:both, will return us to normal block
+ * rendering.
+ */
+
+div.palette-break {
+  clear: left;
+  display: block;
+}
+
+div.palette {
+  display: block;
+  margin-bottom: 1.0em;
+}
+
+span.colour-swatch {
+  background: url(/-/swatch_32.png) no-repeat;
+  /*border: solid black 1px ;*/
+  float: left;
+  width: 32px;
+  height: 32px;
+  margin: 0 6px 6px 0;
+}
+
+/*
+ * Support for embedded video - initially for YouTube. Others are easy to add.
+ *
+ * Code for responsive layouts sourced from
+ * http://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php
+ */
+
+.youtube-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
+
+.youtube-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* video caption text */
+.youtube-container p {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+
+/*
+ * Support for identicons and constituent shapes
+ */
+
+p.shape-list {
+  margin-left: 2%;
+  margin-right: 4%;
+}
+
+img.identicon-fixed {
+  width: 120px;
+  height: 120px;
+  margin: 12px 12px;
+}
+
+img.identicon-fluid {
+  width: 20%;
+  margin: 12px 2%;
+}
+
+img.shape-fixed {
+  width: 40px;
+  height: 40px;
+  margin: 4px 4px;
+  border: solid 1px #104090;
+}
+
+img.shape-fluid {
+  width: 9%;
+  margin: 4px 0.9%;
+  border: solid 1px #104090;
+}

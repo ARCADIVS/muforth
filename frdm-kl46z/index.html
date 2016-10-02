@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="copyright" content="All content on muforth.nimblemachines.com is copyrighted. All rights are reserved." />
+<meta name="robots" content="index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/-/screen.css" type="text/css" />
+<link rel="canonical" href="http://muforth.nimblemachines.com/frdm-kl46z/" />
+<title>FRDM-KL46Z &ndash; muFORTH</title>
+</head>
+<body>
+
+<div id="header">
+<h1>FRDM-KL46Z</h1>
+<hr />
+</div>
+
+<div id="content">
+<p>The <a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=FRDM-KL46Z">FRDM-KL46Z</a> &ndash; another in Freescale&rsquo;s series of <a href="/freescale-freedom-board/">&ldquo;Freedom&rdquo; development boards</a> &ndash; is one of a new batch of very cheap <a href="/arm-cortex-m-development-board/">ARM Cortex-M development board</a>s now available. It costs about USD15.00 and sports the following features:</p>
+<ul>
+<li><a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=KL4x">MKL46Z128VLL4 MCU</a> &ndash; <a href="http://infocenter.arm.com/help/topic/com.arm.doc.subset.cortexm.m0plus/">Cortex M0+ processor core</a> runnning at 48 MHz</li>
+<li>256 KiB Flash, 32 KiB SRAM, USB OTG (full speed), LQFP 100</li>
+<li>Segment LCD controller</li>
+<li>Four digit segment LCD display</li>
+<li><a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=MMA8451Q">MMA8451Q accelerometer</a></li>
+<li><a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=MAG3110">MAG3110 Magnetometer</a></li>
+<li>Ambient light sensor</li>
+<li>Capacitive touch slider</li>
+<li>Two LEDs</li>
+<li>Header pin layout that is compatible with Arduino shields (but 3.3v <strong>only</strong>!)</li>
+</ul>
+<p><img src="/-/FRDM-KL46Z_BDTN.jpg" alt="Freescale FRDM-KL46Z &ldquo;Freedom&rdquo; board" title="Freescale FRDM-KL46Z &ldquo;Freedom&rdquo; board" /></p>
+<p>I don&rsquo;t have one of these boards (yet) but I&rsquo;m assuming its strengths and weaknesses will be the same as the <a href="/frdm-kl25z/">FRDM-KL25Z</a>: good bang for buck, some interesting peripherals, but terrible firmware that is rescued only by the option of using <span class="missing" title="cmsis-dap">CMSIS-DAP</span>.</p>
+<p>Because of their similarities I have copied my thoughts about the KL25Z board here, almost verbatim.</p>
+<hr />
+<h2 id="why-i-think-this-board-is-great"><a href="#why-i-think-this-board-is-great">Why I think this board is great</a></h2>
+<p><strong>Bang for buck</strong> Cheaper and faster than an <span class="missing" title="arduino">Arduino</span>. Plus, it&rsquo;s an ARM, not an AVR. (I&rsquo;m not a fan of the AVR.)</p>
+<p><strong>256 KiB of Flash memory</strong> While not megabytes, this is a lot of code space for a small microcontroller. And because it&rsquo;s not an 8-bitter, there is no need to play funny games with paging to use the memory</p>
+<p><strong>I like Freescale&rsquo;s hardware</strong> I&rsquo;ve been playing around with their 8-bit parts &ndash; the <a href="/freescale-hcs08/">S08</a> series &ndash; and I really like them. They are solid, well-engineered, and pretty bug-free. (Freescale&rsquo;s firmware is another matter though...)</p>
+<p><strong>Cortex-M0+</strong> This series of MCUs from Freescale &ndash; the <a href="http://www.freescale.com/webapp/sps/site/taxonomy.jsp?code=KINETIS_L_SERIES">Kinetis L</a> &ndash; is apparently the first in the industry to sport a Cortex-M0+, which has a few nifty features:</p>
+<ul>
+<li>Two cycle pipeline &ndash; branches and calls are faster, important for heavily-factored code, such as Forth</li>
+<li>Single-cycle I/O &ndash; it&rsquo;s possible to bitbang the pins <em>really fast</em></li>
+<li>Ridiculously low power</li>
+<li>Simplified instruction set &ndash; it shares, with the Cortex-M0, the ARM v6-M instruction set, which much simpler than the Cortex-M3/M4 (v7-M) instruction set. For those wanting to dig in and program in assembler, but are new to 32-bit processors (and maybe to the ARM as well) this chip is a good place to start</li>
+<li>USB interface on the target chip &ndash; programmed with the right firmware the board becomes a USB device in its own right</li>
+</ul>
+<p>Hmm. Firmware.</p>
+<h2 id="but-freescale-really-screwed-up-the-firmware"><a href="#but-freescale-really-screwed-up-the-firmware">... but Freescale really screwed up the firmware!</a></h2>
+<p>I&rsquo;m not sure <em>why</em> they thought it would be a good idea, but they put a &ldquo;mass storage bootloader&rdquo; onto the debug chip. (There is a second part on the board &ndash; a Kinetis K20 USB MCU &ndash; that acts as a debug &ldquo;host&rdquo; so it&rsquo;s possible to program and test the KL25.)</p>
+<p>I think there is this idea that &ldquo;drag-and-drop&rdquo; is <em>easy</em>, but in practice it&rsquo;s a bad choice. It requires a <em>lot</em> of code on the target (USM mass storage layer, code to &ldquo;parse&rdquo; the file being copied and turn that into blocks of code to write to Flash). The feedback is poor &ndash; difficult to know if it &ldquo;took&rdquo; or not. It doesn&rsquo;t work on OSX &ndash; which insists on scribbling random files and directories onto newly-inserted USB media. And, because of the complexity, it&rsquo;s hard to get right.</p>
+<p>Which, needless to say, Freescale <strong>didn&rsquo;t</strong> do. But they didn&rsquo;t just get it <em>wrong</em> &ndash; they embarrassed themselves. (They aren&rsquo;t alone, among semiconductor folks, in this kind of thing. <a href="http://www.st.com">ST</a> did something very similar with their initial version of <span class="missing" title="st-link">ST-LINK</span>.)</p>
+<p>The bootloader enumerates but doesn&rsquo;t attach as a storage device under Linux. It seems that the metadata for the &ldquo;volume&rdquo; that it emulates is all wrong. Even on OSX (and Windows!) where it at least can be mounted as a filesystem, it advertises a capacity of 136MB or so.</p>
+<p>It&rsquo;s sensitive to Windows versions too. I tried it on Windows 2000 and on Windows 7. It failed on 2000 but worked on 7. My guess is it should work on anything XP or later.</p>
+<p>Had they made a simpler choice &ndash; a trivial bootloader for instance, with a simple, published interface (like on Freescale&rsquo;s S08JS16) &ndash; it could easily be cross-platform. Instead, the board at first appeared to be a very light paperweight.</p>
+<p>Until I discovered the <span class="missing" title="cmsis-dap">CMSIS-DAP</span> firmware, that is...</p>
+<h2 id="how-to-rescue-your-freedom-board-from-the-idiotic-clutches-of-freescale-and-p-and-e"><a href="#how-to-rescue-your-freedom-board-from-the-idiotic-clutches-of-freescale-and-p-and-e">How to rescue your Freedom board from the (idiotic) clutches of Freescale (and P &amp; E)</a></h2>
+<p>I haven&rsquo;t mentioned <a href="http://pemicro.com/">P &amp; E</a> yet.</p>
+<p>They were clearly a partner in developing the (idiotic) firmware on the board. They call it &ldquo;OpenSDA&rdquo; &ndash; which I think means &ldquo;open simple debug architecture&rdquo; &ndash; but it&rsquo;s not open, and it&rsquo;s not simple. There is supposed to be a developer&rsquo;s guide, but it&rsquo;s nowhere to be found. Supposedly one can develop firmware to this &ldquo;open&rdquo; spec, that you program onto the board using their broken mass-storage bootloader. But since there is no spec...</p>
+<p>Well, there is a <a href="http://cache.freescale.com/files/32bit/software/board_support_packages/FRDM-KL46Z_QSP.exe">&ldquo;quick start package&rdquo;</a> that includes an s19 (Motorola S-record) file and a couple of .sda files. The .sda files &ndash; for OpenSDA &ndash; are encrypted. WTF?! So much for <em>open</em>!! They are also tied to P &amp; E&rsquo;s debugging tools &ndash; which, I forgot to mention, are <em>advertised</em> via .htm (not html!) files in the mass-storage bootloader&rsquo;s home directory! Tacky! Anyway.</p>
+<p>I started to disassemble the s19 file (slow going because I was using my <span class="missing" title="muforth">muFORTH</span> disassembler, and had to add ARM v7-M opcodes to it as I went!) but coincidentally, before I had got very far, I stumbled over a mention of something called <span class="missing" title="cmsis-dap">CMSIS-DAP</span> &ndash; the very file I was disassembling.</p>
+<p>This turns out to be the firmware that Freescale should have put onto the board in the first place. It turns the board into something that can be interacted with in real-time. Unfortunately, support (on the host side) is (at the time of writing) spotty. But it&rsquo;s how muFORTH connects to the board. ;-)</p>
+<p>Here&rsquo;s what you have to do to rescue your board:</p>
+<ul>
+<li>Get a copy the CMSIS-DAP s19 file. Use <a href="/-/CMSIS-DAP.S19">my copy</a>, or download and unzip either the <a href="http://cache.freescale.com/files/32bit/software/board_support_packages/FRDM-KL46Z_QSP.exe">quick start package (QSP)</a> from Freescale, or the <a href="http://www.keil.com/download/files/apnt_232.zip">code</a> from a Keil <a href="http://www.keil.com/appnotes/docs/apnt_232.asp">appnote</a>. NOTE: Even though the QSP file has a .exe extension, it can be unzipped easily on non-Windows platforms.</li>
+</ul>
+<p>In the Keil zip the file you want is at the root: ./CMSIS-DAP.S19. In the Freescale zip the file is "./FRDM-KL46Z_QSP/OpenSDA Applications/CMSIS-DAP_OpenSDA.S19&rdquo;.</p>
+<ul>
+<li>Boot a recent vintage of Windows. If you&rsquo;re doing this virtualised, add a rule to pass thru USB devices matching vid 2504 &amp; pid 0200 (these are hex values). You don&rsquo;t want the host OS to try to &ldquo;mount&rdquo; this broken board.</li>
+<li>While holding down the switch between the two USB connectors, connect the board. It should enumerate, and then come up as a volume called <strong>BOOTLOADER</strong>.</li>
+<li>Copy over the CMSIS-DAP .s19 file. Wait a few seconds.</li>
+<li>Unplug and re-plug the board, this time <strong>not</strong> pressing the reset switch.</li>
+<li>Verify that it announces itself as &ldquo;Keil Software OpenSDA CMSIS-DAP&rdquo; with USB vid c251 and pid f002.</li>
+<li>Have a drink to celebrate the beginning of a new life for your Freedom board!!</li>
+</ul>
+
+</div>
+
+<div id="footer">
+<hr />
+<a href="mailto:%77%65%62%68%61%6d%73%74%65%72%40%6e%69%6d%62%6c%65%6d%61%63%68%69%6e%65%73%2e%63%6f%6d?subject=FRDM-KL46Z">Send feedback</a> on this page (last edited 2015 April 14 14:34)<br />
+Browse <a href="/all-pages/">all pages</a>, or return <a href="/">home</a>
+</div>
+
+</body>
+</html>

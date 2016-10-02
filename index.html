@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="copyright" content="All content on muforth.nimblemachines.com is copyrighted. All rights are reserved." />
+<meta name="robots" content="index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/-/screen.css" type="text/css" />
+<link rel="canonical" href="http://muforth.nimblemachines.com/" />
+<title>muFORTH - a new ITC Forth &ndash; muFORTH</title>
+</head>
+<body>
+
+<div id="header">
+<h1>muFORTH - a new ITC Forth</h1>
+<hr />
+</div>
+
+<div id="content">
+<p>Quick link: <a href="http://github.com/nimblemachines/muforth/tree/master">Download</a> the latest bits via Git.</p>
+<hr />
+<p>I wrote a Forth called muFORTH, to explore some implementation techniques (a simple native code compiler for the x86, tail recursion), and the idea of building a small kernel, with just enough bits in it to bootstrap itself, by loading more Forth code from source.</p>
+<p>I started working on it in 2002; in 2005, after unsuccessfully trying to &ldquo;port&rdquo; the simple compiler to the PowerPC, so a friend (<span class="missing" title="randy-thelen">Randy Thelen</span>) with a Mac could try the system, I rewrote the core to be an odd hybrid of C code and indirect-threaded Forth. Now it is (hopefully) completely portable.</p>
+<p>The <span class="missing" title="muforth-readme">muFORTH README</span> &ndash; though outdated in some ways &ndash; is a good introduction to why I wrote muFORTH and what I was trying to achieve. It describes the native-code compiler version of the system. That, and a few other things &ndash; notably create/does, the tokeniser, and the <em>lack</em> of tail-recursion in the threaded version &ndash; have changed since the <span class="missing" title="muforth-readme">muFORTH README</span> was written, but much of it is still true, applicable, and hopefully of interest.</p>
+<p>The code used to be in <a href="http://subversion.tigris.org">Subversion</a>, but I am now using Git for everything. muFORTH is available via <a href="http://github.com/nimblemachines/muforth/tree/master">Git</a>.</p>
+<p>I kept a <span class="missing" title="muforth-diary">muFORTH diary</span> for a while, but now the best annotated history is the Git commit comments, which you can browse, or read (from your cloned repo) using <em>git log</em> or <em>git log -p</em> (if you want to see diffs).</p>
+<p>One of the primary reasons for writing muFORTH was to replace the very unportable Linux-specific Forth &ndash; dforth &ndash; that I had been using to do target compilation (for embedded control applications). I&rsquo;m <em>very</em> interested in writing target compilers, hosted on muFORTH, for the <span class="missing" title="arm-architecture">ARM architecture</span> and <span class="missing" title="avr-architecture">AVR architecture</span>. I&rsquo;ve done much of the work already; both are in the master branch of the <span class="missing" title="git-repo">Git repo</span>; see <a href="http://github.com/nimblemachines/muforth/tree/master/mu/target/ARM/">target/ARM/</a> and <a href="http://github.com/nimblemachines/muforth/tree/master/mu/target/AVR/">target/AVR/</a>.</p>
+<hr />
+<p>In March 2008 I gave a <a href="http://www.vimeo.com/859408">talk</a> about bootstrapping, muFORTH, and <span class="missing" title="convivial-tool">convivial tool</span>s.</p>
+<p>A warning: I wave my arms around a lot, and the audio isn&rsquo;t that great, but you might find it amusing.</p>
+
+</div>
+
+<div id="footer">
+<hr />
+<a href="mailto:%77%65%62%68%61%6d%73%74%65%72%40%6e%69%6d%62%6c%65%6d%61%63%68%69%6e%65%73%2e%63%6f%6d?subject=muFORTH%20-%20a%20new%20ITC%20Forth">Send feedback</a> on this page (last edited 2015 April 17 13:04)<br />
+Browse <a href="/all-pages/">all pages</a>, or return <a href="/">home</a>
+</div>
+
+</body>
+</html>
