@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="copyright" content="All content on muforth.nimblemachines.com is copyrighted. All rights are reserved." />
+<meta name="robots" content="index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/-/screen.css" type="text/css" />
+<link rel="canonical" href="http://muforth.nimblemachines.com/cmsis-dap/" />
+<title>CMSIS-DAP &ndash; muFORTH</title>
+</head>
+<body>
+
+<div id="header">
+<h1>CMSIS-DAP</h1>
+<hr />
+</div>
+
+<div id="content">
+<p><strong>CMSIS-DAP</strong> is open-source debug firmware from ARM. It connects to a <a href="http://infocenter.arm.com/help/topic/com.arm.doc.set.coresight/index.html">CoreSight</a> Debug Acces Port (DAP) on a target device, via either ARM&rsquo;s Serial Wire Debug (SWD) or JTAG, and relays commands between the DAP and USB.</p>
+<p>To make installation easier on Windows, the firmware enumerates as a USB HID. The packets exchanged with it are unstructured 64 byte reports. (Microchip did exactly the same thing with their PICKit2.) The code has a somewhat curious license: it can be freely used and modified, as long as it is deployed on an ARM Cortex processor.</p>
+<p>It is connected like this:</p>
+<p><img src="/-/CMSIS_DAP_INTERFACE.png" alt="CMSIS-DAP interface interconnections" title="CMSIS-DAP interface interconnections" /></p>
+<h2 id="getting-the-source-and-documentation"><a href="#getting-the-source-and-documentation">Getting the source &amp; documentation</a></h2>
+<p>Download the <a href="https://silver.arm.com/browse/CMSISDAP">CMSIS-DAP sources and protocol documentation</a> (an account is required, but signing up is free).</p>
+<p>The code can only be built using Keil&rsquo;s MDK software.</p>
+<h2 id="getting-pre-built-binaries"><a href="#getting-pre-built-binaries">Getting pre-built binaries</a></h2>
+<p>The only prebuilt binaries I am aware of are the OpenSDA versions intended for use on Freescale&rsquo;s <a href="/freescale-freedom-board/">Freedom boards</a>. I have instructions for installing CMSIS-DAP on my <a href="/freescale-freedom-board/">Freedom board</a> pages for each of the variants that I think are of interest to experimentors.</p>
+<h2 id="appreciation"><a href="#appreciation">Appreciation</a></h2>
+<p>After carefully reading the documentation, and then even more carefully reading the C source code, and then cross-referencing five or seven different ARM documents (ARM architecture manuals, debug manuals, processor manuals), I was, in the space of a few days&rsquo; time, able to get <a href="/">muFORTH</a> to talk to the CMSIS-DAP firmware installed on a Freedom board and lay open the guts of the KL25Z chip.</p>
+<p>It&rsquo;s a simple and well-designed protocol. And since getting it to work involves digging deeply into CoreSight, SWD, and other ARM debug arcana, I&rsquo;ve developed an appreciation for the overall design. I&rsquo;m impressed.</p>
+<h2 id="conjecture"><a href="#conjecture">Conjecture</a></h2>
+<p>I can&rsquo;t read ARM&rsquo;s collective mind, but my conjecture is that ARM created CMSIS-DAP because they were irritated by the profusion of proprietary and undocumented debug interfaces in the so-called &ldquo;ARM ecosystem&rdquo;. If this is the reason, I can certainly relate, having decided to build my own <span class="missing" title="bdm-debug">BDM debug</span> for Freescale&rsquo;s <a href="/freescale-hcs08/">S08</a> family of 8-bit microcontrollers. I looked at the DEMO boards available and was frustrated by the fact that <a href="http://www.pemicro.com/">P &amp; E</a> decided to &ldquo;lock down&rdquo; the debug ports on these boards. And they were undocumented, which didn&rsquo;t work for me &ndash; I wanted to connect with them via <a href="/">muFORTH</a>, and avoid using CodeWarrior.</p>
+<p>We now have the same problem with <a href="/arm-cortex-m-development-board/">ARM Cortex-M development board</a>s. <span class="missing" title="st-micro">ST-Micro</span> uses <span class="missing" title="st-link">ST-LINK</span> on their STM32 Discovery series. TI uses ICDI on the <span class="missing" title="stellaris-launchpad">Stellaris Launchpad</span>. And Freescale&rsquo;s Freedom boards ship with something called "<span class="missing" title="opensda">OpenSDA</span>" &ndash; which isn&rsquo;t open at all.</p>
+<p>At least OpenSDA allows CMSIS-DAP to be installed on the Freedom boards. Otherwise the boards are useless!</p>
+<h2 id="tips-and-tricks"><a href="#tips-and-tricks">Tips and tricks</a></h2>
+<p>Even though the documentation is pretty thorough, there were a few hurdles to getting connected to the target chip.</p>
+<p>First, a &ldquo;line reset&rdquo; connection sequence is necessary. This involves clocking a sequence of bits into the SW-DP. ARM&rsquo;s documentation &ndash; the <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ihi0031a/">ARM Debug Interface v5 spec</a> and the <a href="http://infocenter.arm.com/help/topic/com.arm.doc.prdc008772b/">ADI v5.1 supplement</a> &ndash; disagreed on what this sequence should be. I settled on sending 56 ones followed by 8 zeros, and this seemed to work.</p>
+<p>My next hurdle was to try to read the chip&rsquo;s memory. But any access to AP (access port) registers failed, returning a FAULT. It turns out that it is necessary to first turn on the CSYSPWRUPREQ and CSYSDBGREQ bits in the DP.CTRLSTAT register... Once I did this, the chip was mine!</p>
+
+</div>
+
+<div id="footer">
+<hr />
+<a href="mailto:%77%65%62%68%61%6d%73%74%65%72%40%6e%69%6d%62%6c%65%6d%61%63%68%69%6e%65%73%2e%63%6f%6d?subject=CMSIS-DAP">Send feedback</a> on this page (last edited 2015 April 14 14:09)<br />
+Browse <a href="/all-pages/">all pages</a>, or return <a href="/">home</a>
+</div>
+
+</body>
+</html>

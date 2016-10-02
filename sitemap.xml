@@ -3,6 +3,9 @@
   <url><loc>http://muforth.nimblemachines.com/arm-architecture/</loc></url>
   <url><loc>http://muforth.nimblemachines.com/arm-cortex-m-development-board/</loc></url>
   <url><loc>http://muforth.nimblemachines.com/arm-development-board/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/cmsis-dap/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/convivial-computing-hardware/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/convivial-tool/</loc></url>
   <url><loc>http://muforth.nimblemachines.com/frdm-k20d50m/</loc></url>
   <url><loc>http://muforth.nimblemachines.com/frdm-kl25z/</loc></url>
   <url><loc>http://muforth.nimblemachines.com/frdm-kl46z/</loc></url>
@@ -14,6 +17,7 @@
   <url><loc>http://muforth.nimblemachines.com/freescale-s08js/</loc></url>
   <url><loc>http://muforth.nimblemachines.com/freescale-s08qe/</loc></url>
   <url><loc>http://muforth.nimblemachines.com/freescale-s08qg/</loc></url>
+  <url><loc>http://muforth.nimblemachines.com/js16-usb-board/</loc></url>
   <url><loc>http://muforth.nimblemachines.com/muforth-cross-compiler/</loc></url>
   <url><loc>http://muforth.nimblemachines.com/muforth-diary/</loc></url>
   <url><loc>http://muforth.nimblemachines.com/muforth-readme/</loc></url>

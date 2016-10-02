@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="copyright" content="All content on muforth.nimblemachines.com is copyrighted. All rights are reserved." />
+<meta name="robots" content="index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/-/screen.css" type="text/css" />
+<link rel="canonical" href="http://muforth.nimblemachines.com/js16-usb-board/" />
+<title>JS16 USB board &ndash; muFORTH</title>
+</head>
+<body>
+
+<div id="header">
+<h1>JS16 USB board</h1>
+<hr />
+</div>
+
+<div id="content">
+<p>After I went through an arduous process of <span class="missing" title="bootstrapping-the-s08">bootstrapping the S08</span>, using a <a href="/freescale/">Freescale</a> <a href="http://cache.freescale.com/files/microcontrollers/doc/data_sheet/MC68HC908QB8.pdf">MC908QB8</a> as a BDM debug &ldquo;host&rdquo;, Freescale introduced the <a href="/freescale-s08js/">S08JS</a>, which, unlike most other S08 parts, is not entirely blank when it comes from the factory. Instead, it contains a small USB bootloader, which is almost trivial to interface with over USB. Once I built a board, getting <a href="/">muFORTH</a> to talk to the bootloader and program the flash was a few hours&rsquo; work at most.</p>
+<p>Building the board was more of a challenge, and that&rsquo;s what I&rsquo;d like to document here.</p>
+<p>Unlike the <span class="missing" title="microchip-pic">Microchip PIC</span> USB parts, many of which come in easily-breadboarded DIP packages, Freescale&rsquo;s only USB-capable S08 (prior to the introduction of the <a href="/freescale-s08js/">S08JS</a>) was the <a href="/freescale-s08jm/">S08JM</a> family, which only comes in hard-to-prototype LQFP packages. I looked around for a while to find a basic breakout board for an LQFP 44 0.8mm pitch part, but didn&rsquo;t find anything to my liking. (<a href="/dipmicro-electronics/">dipmicro</a> now sell an <a href="http://www.dipmicro.com/store/PCB-LQFP44-DIP44B">LQFP 44 0.8mm pitch breakout board</a> that would be <em>perfect</em> for this.)</p>
+<p>Enter the JS16. This part, while not available in a DIP, is available in an SOIC 20 package. Once I stumbled over <a href="/dipmicro-electronics/">dipmicro</a>'s nice prototyping boards, I was ready to proceed.</p>
+<h2 id="parts-list"><a href="#parts-list">Parts list</a></h2>
+<p>The parts list for the board is roughly as follows (the costs assume quantity ten of each part):</p>
+<ul>
+<li><a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=S08JS">MC9S08JS16CWJ</a> (free &ndash; got several as samples from Freescale)</li>
+<li><a href="http://www.dipmicro.com/store/PCB-PB1">dipmicro proto board</a> ($1)</li>
+<li><a href="http://www.dipmicro.com/store/XC6-40000">4 MHz crystal</a> ($0.14)</li>
+<li>2x 4.7uF tantalum capacitor (junk box)</li>
+<li>2x 0.1uF mica capacitor (junk box)</li>
+<li>2x 22pF capacitor (junk box)</li>
+<li><a href="http://www.dipmicro.com/store/CON-USB-B">female USB type &ldquo;B&rdquo; connector</a> ($0.24)</li>
+<li><a href="http://www.dipmicro.com/store/R6F10-4">1M ohm feedback resistor, 2%</a> ($0.03)</li>
+<li><a href="http://www.dipmicro.com/store/R1F33-4">2x 33 ohm USB resistor, 2%</a> ($0.06)</li>
+<li><a href="http://www.dipmicro.com/store/HEADS40G">header pins</a> (21 pins) ($0.11)</li>
+<li>hookup wire salvaged from CAT5 cable (junk box)</li>
+</ul>
+<p>Total cost: $1.58</p>
+<p>Of course, I had to buy the parts in lots of 10 or 20, so the real cost is more... But I&rsquo;m hoping to make a few more of these boards. They are really useful!</p>
+<p>Just for fun, if I paid the quantity one price for everything (well, everything except for the capacitors, of which I have a <em>ton</em>), how much would the board cost?</p>
+<ul>
+<li>S08JS16: $1.44</li>
+<li>proto board: $1.93</li>
+<li>crystal: $0.26</li>
+<li>USB connector: $0.33</li>
+<li>resistors: $0.24</li>
+<li>header pins: (one 40-pin 1-row header): $0.32</li>
+</ul>
+<p>Total (unit) cost: $4.52</p>
+<p>Still pretty reasonable. ;-)</p>
+<h2 id="schematic"><a href="#schematic">Schematic</a></h2>
+<p>Except for bringing out a few pins to headers on the board, my design follows the schematic on page 23 of the <a href="http://cache.freescale.com/files/32bit/doc/ref_manual/MC9S08JS16RM.pdf">S08JS reference manual</a>, bearing in mind the following:</p>
+<ol>
+<li>The feedback resistor across the crystal is <em>not</em> optional! I fitted a 1M ohm resistor, which works fine.</li>
+<li>There are many possible crystal options. I forget all the possibilities, but 4 MHz, 6 MHz, 8 MHz, and 12 MHz all work fine. I&rsquo;m using a 4 MHz crystal because I can also use with other members of the <a href="/freescale-hcs08/">S08</a> family that have a simpler clock source on chip with an external oscillator that only works up to 5 MHz.</li>
+<li>If you want to use the on-chip USB voltage regulator, the bypass caps on Vusb are <em>not</em> optional. The values aren&rsquo;t critical. I think I used similar values to those on the schematic.</li>
+</ol>
+
+</div>
+
+<div id="footer">
+<hr />
+<a href="mailto:%77%65%62%68%61%6d%73%74%65%72%40%6e%69%6d%62%6c%65%6d%61%63%68%69%6e%65%73%2e%63%6f%6d?subject=JS16%20USB%20board">Send feedback</a> on this page (last edited 2013 August 26 23:51)<br />
+Browse <a href="/all-pages/">all pages</a>, or return <a href="/">home</a>
+</div>
+
+</body>
+</html>
