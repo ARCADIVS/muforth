@@ -1,5 +1,5 @@
 /*
- * Style sheet for nimblemachines.com
+ * Style sheet for muforth.nimblemachines.com
  */
 
 /* Import some awesome fonts! */
@@ -257,39 +257,6 @@ blockquote {
   border-left: 5px solid #ddd;
 }
 
-/* stuff for flickr badge */
-div.flickr_badge_image {
-  display: inline;
-  margin: 0px;
-  padding: 0px;
-}
-
-.flickr_badge_image img {
-  border: 1px solid black;
-/*  margin: 5px 5px 5px 5px; */
-  margin:  5px;
-  padding: 0px;
-
-/* This is very interesting. There was a "bug", it seemed, that there was
-  extra space at the bottom of the div enclosing the pix. Why? Well, it
-  seems that the images defaulted to
-    vertical-align: baseline;
-  which wants to put in "leading" below the baseline. Setting
-    vertical-align: bottom;
-  solves the extra space problem, but looks bad; setting
-    vertical-align: middle;
-  looks nice. ;-)
-*/
-  vertical-align: middle;
-}
-
-div.flickr_badge {
-/*  background-color: #CCCCCC; */
-  margin: 0;
-  padding: 0px;
-  text-align: left;
-}
-
 /* Let's make code and pre look good. */
 code, pre {
   font-family: Inconsolata, Ubuntu Mono, monospace;
@@ -341,36 +308,6 @@ p.comment {
 }
 
 /*
- * Colour palettes! 
- *
- * NOTE: the <span> elements have to float left, otherwise they have zero width
- * and are not rendered. If you put a border on them you will see this.
- *
- * In order to return to "normal" after displaying a palette, therefore, we add
- * a div.palette-break, which, being clear:both, will return us to normal block
- * rendering.
- */
-
-div.palette-break {
-  clear: left;
-  display: block;
-}
-
-div.palette {
-  display: block;
-  margin-bottom: 1.0em;
-}
-
-span.colour-swatch {
-  background: url(/-/swatch_32.png) no-repeat;
-  /*border: solid black 1px ;*/
-  float: left;
-  width: 32px;
-  height: 32px;
-  margin: 0 6px 6px 0;
-}
-
-/*
  * Support for embedded video - initially for YouTube. Others are easy to add.
  *
  * Code for responsive layouts sourced from
@@ -398,37 +335,4 @@ span.colour-swatch {
 .youtube-container p {
   margin-top: 0.5em;
   margin-bottom: 0;
-}
-
-/*
- * Support for identicons and constituent shapes
- */
-
-p.shape-list {
-  margin-left: 2%;
-  margin-right: 4%;
-}
-
-img.identicon-fixed {
-  width: 120px;
-  height: 120px;
-  margin: 12px 12px;
-}
-
-img.identicon-fluid {
-  width: 20%;
-  margin: 12px 2%;
-}
-
-img.shape-fixed {
-  width: 40px;
-  height: 40px;
-  margin: 4px 4px;
-  border: solid 1px #104090;
-}
-
-img.shape-fluid {
-  width: 9%;
-  margin: 4px 0.9%;
-  border: solid 1px #104090;
 }
