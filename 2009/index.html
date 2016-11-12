@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta name="copyright" content="All content on muforth.nimblemachines.com is copyrighted. All rights are reserved." />
+<meta name="keywords" content="2009, journal, blog" />
 <meta name="robots" content="index,follow" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="/-/screen.css" type="text/css" />
@@ -213,6 +214,8 @@
 <p>Of course, there is another issue that I haven&rsquo;t mentioned that consumed quite a bit of time to debug. Since the BDC protocol is based on the <em>target&rsquo;s</em> clock speed &ndash; each bit transmitted taking 16 BDC cycles &ndash; I need to drive BKGD fast enough to keep up with the target. The &ldquo;host&rdquo; &ndash; in this case the 908QB8 &ndash; has an internal oscillator that at the fastest setting yields a bus clock (instruction clock) of 3.2MHz. The 9S08QG8 runs its BDC clock at 8MHz. The tightest code I could write for sending and receiving bits was too slow, so I spent a bunch of time debugging oscillator settings.</p>
 <p>After finding a 25Mhz crystal, I&rsquo;m now running the 908 with a 6.25MHz bus clock, which is fast enough to keep up &ndash; but it still doesn&rsquo;t work.</p>
 <p>Which is why I thought I&rsquo;d take a break and document my progress, instead of driving myself crazy.</p>
+<hr />
+<p>Read the <a href="/2008/">2008 journal</a>.</p>
 
 </div>
 
