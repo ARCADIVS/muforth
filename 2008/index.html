@@ -36,31 +36,31 @@
 </ul>
 <p>Why, then, am I concentrating on Freescale&rsquo;s HCS08 instead?</p>
 <p>I&rsquo;ve mentioned <a href="/2008/#december-13-16:40">elsewhere</a> that I like the 6800 heritage. It&rsquo;s nostalgic for me. But that&rsquo;s a ridiculous reason, right? So what are some <em>compelling</em> reasons to use these parts?</p>
-<h2 id="attractions-of-the-s08"><a href="#attractions-of-the-s08">Attractions of the S08</a></h2>
-<h3 id="cost"><a href="#cost">Cost</a></h3>
+<h4 id="attractions-of-the-s08"><a href="#attractions-of-the-s08">Attractions of the S08</a></h4>
+<h5 id="cost"><a href="#cost">Cost</a></h5>
 <p>They are quite cheap &ndash; cheaper than comparable PIC or AVR parts &ndash; and you get a lot of bang for your buck. For instance, the S08QG parts in DIPs have a UART, SPI, and I2C, all standard, a good selection of timers, 8 channel 10 bit ADC, and some nice add-on features, such as clever compare logic in the ADC that causes an interrupt only when a value crosses a threshold. The USB parts have 12 bit ADC, 2 UARTS, and 2 SPI ports.</p>
 <p>Also, it&rsquo;s quite easy to get free samples, directly from Freescale, and also to buy directly from them, for very competitive prices, even down to quantity one.</p>
-<h3 id="flash"><a href="#flash">Flash</a></h3>
+<h5 id="flash"><a href="#flash">Flash</a></h5>
 <p>Unlike Atmel&rsquo;s Flash, which is only good to 10k cycles (if you&rsquo;re lucky) and has a short retention lifetime (10 years?), Freescale&rsquo;s Flash, like much of Microchip&rsquo;s, is good to 100k cycles and has a retention of more like 100 years. This might not sound like a big deal, esp for hobbyists, but philosophically I find it unappealing to use something so obsolescent as Atmel&rsquo;s chips.</p>
-<h3 id="von-neumann-architecture"><a href="#von-neumann-architecture">Von Neumann architecture</a></h3>
+<h5 id="von-neumann-architecture"><a href="#von-neumann-architecture">Von Neumann architecture</a></h5>
 <p>A feature that is here in the &ldquo;pro&rdquo; column but also has a dark underside. Since RAM and Flash exist in the same memory map, it&rsquo;s possible to execute code out of RAM &ndash; and in fact it is <em>necessary</em> to do so when executing code to program the Flash. Code in RAM make several things possible:</p>
 <ul>
 <li>self-modifying code</li>
 <li>&ldquo;specialised code&rdquo;, generated on the fly on the target</li>
 <li>nice interactive development &ndash; ie, the ability to define and execute new bits of code while &ldquo;online&rdquo; with the target</li>
 </ul>
-<h3 id="built-in-debug-architecture"><a href="#built-in-debug-architecture">Built-in debug architecture</a></h3>
+<h5 id="built-in-debug-architecture"><a href="#built-in-debug-architecture">Built-in debug architecture</a></h5>
 <p>This is an attractive feature, esp if you&rsquo;re going to use Freescale&rsquo;s development software, which can take full advantage of it.</p>
 <p>Basically, every S08 part &ndash; even the lowliest 8 pin part &ndash; has not only a background debug mode (BDM) single-pin interface (which can be used to Flash empty parts, to reprogram parts, and to debug running code!) but also a tiny built-in in-circuit emulater (ICE). There are two code breakpoints and one data watchpoint available in hardware, with sophisticated chaining available between two of them. There is also an 8 entry trace buffer, allowing the capture of address and data bus values.</p>
 <p>Considering how &ldquo;low-end&rdquo; some of these parts are, this is quite a stunning feature.</p>
-<h3 id="quality-peripherals"><a href="#quality-peripherals">Quality peripherals</a></h3>
+<h5 id="quality-peripherals"><a href="#quality-peripherals">Quality peripherals</a></h5>
 <p>It&rsquo;s more &ldquo;gut feeling&rdquo; than real empirics, but the quality and flexibility of the on-chip peripherals seems very high, compared to AVR and PIC. Maybe when I re-develop all my code for AVR I&rsquo;ll have harder data on this one. ;-)</p>
-<h3 id="upward-migration-path"><a href="#upward-migration-path">Upward migration path</a></h3>
+<h5 id="upward-migration-path"><a href="#upward-migration-path">Upward migration path</a></h5>
 <p>Freescale have introduced several new S08 families with the so-called Flexis architecture. The new USB parts &ndash; the <a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=S08JM">S08JM family</a> &ndash; are Flexis parts.</p>
 <p>Flexis families have both S08 members, and 32-bit ColdFire members, which are pin-compatible and only a bit more expensive than their 8-bit cousins, making it easy (assuming your code is not in assembler!) to upgrade to a fast 32-bit core. The peripherals are exactly the same 8-bit peripherals in the S08 parts, so all that code &ndash; again, assuming it&rsquo;s in a high-level language &ndash; will port over trivially.</p>
 <p>Or so the story goes. It&rsquo;s a nice idea, and if you&rsquo;re not interested in ever using the 8-bit version, it&rsquo;s a way to get quite cheap 32-bit parts.</p>
 <p>And since ColdFire is essentially 68k, it&rsquo;s a good target for Forth and C (and everything else) and also nice for nostalgia buffs.</p>
-<h2 id="distractions-of-the-s08"><a href="#distractions-of-the-s08">Distractions of the S08</a></h2>
+<h4 id="distractions-of-the-s08"><a href="#distractions-of-the-s08">Distractions of the S08</a></h4>
 <p>Ok, so how about downsides to the HCS08? There are several, and a few are big ones.</p>
 <ul>
 <li>lack of community</li>
